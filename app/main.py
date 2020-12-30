@@ -1,37 +1,19 @@
 import json
 
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
+from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.attributes import QueryableAttribute
 
 app = Flask(__name__)
+CORS(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String(120), unique=True, nullable=False)
-    def __repr__(self):
-        return '<User %r>' % self.email
-
-
-class Llama(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=False, nullable=False)
-    def __repr__(self):
-        return '<Llama %r>' % self.name
-
-
-class Mushroom(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(120), unique=False, nullable=False)
-    def __repr__(self):
-        return '<Mushroom %r>' % self.name
-
-
+########## Endpoints 
 @app.route('/', methods=['GET'])
 def index():
     return 'You are at index :)'
@@ -39,6 +21,7 @@ def index():
 
 @app.route('/llamas', methods=['GET'])
 def llamas():
+    print(request.headers.get('custom-header'))
     llamas = Llama.query.all()
     all = []
     [all.append( {"id": str(l.id), "name": l.name} ) for l in llamas]
@@ -61,6 +44,29 @@ def users():
     return json.dumps(all)
 
 
+########## Entities
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    def __repr__(self):
+        return '<User %r>' % self.email
+
+
+class Llama(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    def __repr__(self):
+        return '<Llama %r>' % self.name
+
+
+class Mushroom(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(120), unique=False, nullable=False)
+    def __repr__(self):
+        return '<Mushroom %r>' % self.name
+
+
+########## Init db for testing.
 @app.route('/init', methods=['GET'])
 def init():
     try:

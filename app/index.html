@@ -14,12 +14,11 @@
 <body>
 
     <!-- Navbar -->
-    <!-- Style options: navbar-dark bg-primary | bg-dark, navbar-light bg-light, style="background-color:#e3f2fd", etc. -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <!-- Container wrapper -->
         <div class="container-fluid">
           <!-- Navbar brand -->
-          <a class="navbar-brand" href="/">App</a>
+          <a class="navbar-brand" href="/" id="app_title" name="app_title">App</a>
   
           <!-- Toggle button -->
           <button
@@ -36,20 +35,20 @@
           <!-- Collapsible wrapper -->
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left links -->
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <!-- <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{{ url_for('blog.index') }}">Home</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#"></a>
               </li>
-            </ul>
+            </ul> -->
             <!-- Left links -->
   
             <div class="user-info" style="font-weight: lighter;color: white;">
-              <label id="username" name="username" style="padding-right: 20px;"></label>
-              <a id="signout" name="signout" class="btn btn-primary" href="">Sign-out</a>
-              <a id="signin" name="signin" class="btn btn-primary" href="">Sign-in</a>
+              <label id="username" name="username" style="padding-right: 20px;display: none;">who am i?</label>
+              <a id="signout" name="signout" class="btn btn-primary" href="" style="display: none;">Sign-out</a>
+              <a id="signin" name="signin" class="btn btn-primary" href="" style="display: none;">Sign-in</a>
             </div>
 
           </div><!-- Collapsible wrapper -->
@@ -60,8 +59,9 @@
       <div class="container">
 
         <section class="content" style="padding-top: 20px;">
-          <header id="title" name="title">title</header>
-          <section id="content" name="content">content</section>
+          <span class="display-6" id="data_title" name="data_title" style="padding-right: 20px;">title</span>
+          <span class="badge bg-info" id='timestamp' name='timestamp'></span>
+          <div id="content" name="content" class="float-none">content</div>
         </section>
   
       </div>
