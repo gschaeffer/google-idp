@@ -1,13 +1,13 @@
 
 $( document ).ready(function() {
     let host_endpoint = 'http://127.0.0.1:5000/'
-    var sub_domain = document.location.host;
+    var app_name = document.location.hostname;
     let data_object = 'mushrooms';
 
-    // $('#app_title').html (sub_domain);
+    // $('#app_title').html (app_name);
 
     $.ajaxSetup({
-        headers: { 'authentication-method': 'none' }
+        headers: { 'Authorization': 'Bearer ' + token.userIdToken }
     });
 
     function load_content() {
@@ -18,7 +18,6 @@ $( document ).ready(function() {
             array_data = JSON.parse(data); // to array
 
             display_data = "<table class='table table-hover table-bordered '><tbody>"
-            // display_data = display_data.concat("<thead><tr>", "<td>", 'name', "</td>", "</tr></thead>");
             for (i in array_data){
                 // console.log(array_data[i].name);
                 display_data = display_data.concat("<tr>", "<td>", array_data[i].name, "</td>", "</tr>")

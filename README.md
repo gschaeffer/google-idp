@@ -10,11 +10,18 @@ Load it usaing Google Cloud Run:
 
 ### Branches
 
-|Branch     |                                                              |
-| ------------------ | ------------------------------------------------------ |
-| main         | Python Fask app with SQLite access, un-authenticated. The Flask API may be accessed via web/js, curl, or other means. |
-| gcp-idp-auth | Google Identity Platform example. FirebaseUI (html) is used to demonstrate user sign-in. Authentication is added to the Flask app. IdP uses the email & password provider. |
-|              |                                                              |
+#### main
+
+- Python Fask app with SQLite access, un-authenticated. The Flask API may be accessed via web/js, curl, or other means.
+
+#### gcp-idp-auth
+
+- Google Identity Platform example. FirebaseUI (html) is used to demonstrate user sign-in. Authentication is added to the Flask app. IdP uses the email & password provider.
+- Changes from main branch.
+  - If the user is not signed-in (token is not present), the webpage displays to Firebase UI. On login (token value set) the webpage displays the data content instead of the Firebase UI.
+  - REST calls now include the user token in the header.
+  - The Flask endpoints use authentication to validate the user token. Authentication is in the form of a decorator that is applied to any endpoint as needed. 
+- Google Identity Platform is configured to use the username & password, Google, and Github authentication providers.
 
 ### Usage
 
