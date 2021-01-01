@@ -1,16 +1,84 @@
 
+// Changes
+// - 1. add config object with google key/values.
+// - 2. add configureFirebaseLogin function.
+// - 3. add configureFirebaseLoginWidget function.
+// - 4. comment out sign-in button - redundant to firebaseUI.
+// - 5. update sign-out function to exit firebase.
+
 $( document ).ready(function() {
     let host_endpoint = 'http://127.0.0.1:5000/'
     var app_url = document.location.href;
     let data_object = 'mushrooms';
 
 
-    $('#signin').click(signin);
+    // 1. JS object w/google key/values.
+    var config = {
+        apiKey: "AIzaSyCObdWu3i9LkMHype7ks7ckcrFWI26LRGk",
+        authDomain: "capable-shard-298720.firebaseapp.com",
+        projectId: "capable-shard-298720",
+        storageBucket: "capable-shard-298720.appspot.com",
+        messagingSenderId: "331973061162",
+        appId: "1:331973061162:web:617bce0956e263402b7153"
+    };
+
+    // 2.  add function
+    function configureFirebaseLogin() {
+
+        firebase.initializeApp(config);
+        firebase.auth().onAuthStateChanged(function(user) {
+          if (user) {
+            // $('#logged-out').hide();
+            var name = user.displayName;
+    
+            // If the provider gives a display name, use it. Otherwise, use the user's email.
+            var welcomeName = name ? name : user.email;
+            sessionStorage.setItem('welcomeName', welcomeName);
+    
+            user.getIdToken().then(function(idToken) {
+                token.userIdToken = idToken;
+            });
+          }
+        });
+      }
+
+
+    // 3. add function
+    function configureFirebaseLoginWidget() {
+        var uiConfig = {
+            signInSuccessUrl: app_url,
+            signInOptions: [
+                firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+                firebase.auth.GithubAuthProvider.PROVIDER_ID,
+                firebase.auth.EmailAuthProvider.PROVIDER_ID,
+                // firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+            ],
+            // Terms of service url/callback.
+            tosUrl: '<your-tos-url>',
+            // Privacy policy url/callback.
+            privacyPolicyUrl: function() {
+                window.location.assign('<your-privacy-policy-url>');
+            }
+        };
+
+        var ui = new firebaseui.auth.AuthUI(firebase.auth());
+        // The start method will wait until the DOM is loaded.
+        if ( $('#content-auth').length ) {
+            ui.start('#content-auth', uiConfig);
+        }
+        // console.log("STARTED");
+    }
+
+
+    // 4. Remove sign-in button.
+    // $('#signin').click(signin);
+    document.getElementById('signin').style.display = "none";
+
     $('#signout').click(signout);
 
     set_ui_display();
 
-    // $('#app_title').html (app_url);
+    // $('#app_title').html (app_name);
 
     $.ajaxSetup({
         headers: { 'Authorization': 'Bearer ' + token.userIdToken }
@@ -25,7 +93,6 @@ $( document ).ready(function() {
 
             display_data = "<table class='table table-hover table-bordered '><tbody>"
             for (i in array_data){
-                // console.log(array_data[i].name);
                 display_data = display_data.concat("<tr>", "<td>", array_data[i].name, "</td>", "</tr>")
             }
             display_data = display_data.concat("</tbody><table>")
@@ -41,6 +108,9 @@ $( document ).ready(function() {
         });
     }
 
+    configureFirebaseLogin();
+    configureFirebaseLoginWidget();
+
     load_content();
 });
 
@@ -52,7 +122,9 @@ function set_ui_display(){
         document.getElementById('content-data').style.visibility = 'block';
         document.getElementById('content-auth').style.display = 'none';
         document.getElementById('username').style.visibility = 'visible';
-        document.getElementById('username').innerHTML = 'test@domain.com';
+        // document.getElementById('username').innerHTML = 'test@domain.com';
+        // 6. Update username display.
+        document.getElementById('username').innerHTML = sessionStorage.getItem('welcomeName');
         document.getElementById('signin').style.display = 'none';
         document.getElementById('signout').style.visibility = 'visible';
     } else {
@@ -92,7 +164,12 @@ function signin(){
 }
 
 function signout(){
-    token.userIdToken = "";
+    // 5. sign-out of firebase.
+    firebase.auth().signOut().then(function() {
+        token.userIdToken = "";
+      }, function(error) {
+        console.log(error);
+      });
 }
 
 
