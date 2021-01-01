@@ -12,12 +12,10 @@
     <script src="static/js/app.js"></script>
 </head>
 <body>
-
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <!-- Container wrapper -->
         <div class="container-fluid">
-          <!-- Navbar brand -->
           <a class="navbar-brand" href="/" id="app_title" name="app_title">App</a>
   
           <!-- Toggle button -->
@@ -38,30 +36,25 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <!-- <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{{ url_for('blog.index') }}">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#"></a>
               </li> -->
             </ul>
             <!-- Left links -->
-  
             <div class="user-info" style="font-weight: lighter;color: white;">
               <label id="username" name="username" class="pr-6 mb-1" style="padding-right: 20px;">who am i?</label>
               <a id="signout" name="signout" class="btn btn-primary" href="">Sign-out</a>
               <a id="signin" name="signin" class="btn btn-primary" href="">Sign-in</a>
             </div>
-
           </div><!-- Collapsible wrapper -->
         </div><!-- Container wrapper -->
       </nav><!-- Navbar -->
-
 
       <div class="container">
 
         <section class="content" style="padding-top: 20px;">
           <span class="display-6" id="data_title" name="data_title" style="padding-right: 20px;">title</span>
           <span class="badge bg-info" id='timestamp' name='timestamp'></span>
-          <div id="content" name="content" class="float-none">content</div>
+          <div id="content-data" name="content-data" class="float-none">data</div>
+          <div id="content-auth" name="content-auth" class="float-none"></div>
         </section>
   
       </div>

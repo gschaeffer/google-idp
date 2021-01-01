@@ -24,7 +24,7 @@ $( document ).ready(function() {
             }
             display_data = display_data.concat("</tbody><table>")
 
-            $('#content').html (display_data);
+            $('#content-data').html (display_data);
             $('#timestamp').html(calcTime(6));
         }).fail(function(data, status){
             console.log('Uh oh, ' + status);
@@ -61,7 +61,7 @@ function calcTime(offset) {
 
 
 function set_ui_display(){
-    // If user signed in (authenticated) then display username, sign-out button, and data.
+    // If user signed in (authenticated) then display username, sign-out button, and data content.
     // else, display sign-in button & hide the rest.
     if (token.userIdToken.length > 0) {
         // signed-in
@@ -69,14 +69,12 @@ function set_ui_display(){
         document.getElementById('username').innerHTML = 'marco@mail.com';
         document.getElementById('signin').style.visibility = 'hidden';
         document.getElementById('signout').style.visibility = 'visible';
-        // console.log(document.getElementById('username').style.visibility);
     } else {
         // signed-out
         document.getElementById('username').style.visibility = 'hidden';
         document.getElementById('username').innerHTML = '';
         document.getElementById('signin').style.visibility = 'visible';
         document.getElementById('signout').style.visibility = 'hidden';
-        // console.log(document.getElementById('username').style.visibility);
     }
 }
 
