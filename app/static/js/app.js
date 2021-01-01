@@ -4,6 +4,8 @@ $( document ).ready(function() {
     var app_name = document.location.hostname;
     let data_object = 'mushrooms';
 
+    set_ui_display();
+
     // $('#app_title').html (app_name);
 
     $.ajaxSetup({
@@ -24,7 +26,7 @@ $( document ).ready(function() {
             }
             display_data = display_data.concat("</tbody><table>")
 
-            $('#content-data').html (display_data);
+            $('#data-display').html (display_data);
             $('#timestamp').html(calcTime(6));
         }).fail(function(data, status){
             console.log('Uh oh, ' + status);
@@ -36,7 +38,6 @@ $( document ).ready(function() {
     }
 
     load_content();
-    set_ui_display();
 });
 
 
@@ -59,18 +60,21 @@ function calcTime(offset) {
     return nd.toLocaleString();
 }
 
-
 function set_ui_display(){
     // If user signed in (authenticated) then display username, sign-out button, and data content.
     // else, display sign-in button & hide the rest.
     if (token.userIdToken.length > 0) {
         // signed-in
+        document.getElementById('content-data').style.visibility = 'block';
+        document.getElementById('content-auth').style.display = 'none';
         document.getElementById('username').style.visibility = 'visible';
         document.getElementById('username').innerHTML = 'marco@mail.com';
         document.getElementById('signin').style.visibility = 'hidden';
         document.getElementById('signout').style.visibility = 'visible';
     } else {
         // signed-out
+        document.getElementById('content-data').style.display = 'none';
+        document.getElementById('content-auth').style.visibility = 'block';
         document.getElementById('username').style.visibility = 'hidden';
         document.getElementById('username').innerHTML = '';
         document.getElementById('signin').style.visibility = 'visible';

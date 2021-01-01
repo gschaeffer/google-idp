@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="static/css/mdb.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="static/js/app.js"></script>
+    <script src="static/js/gcp-idp.js"></script>
 </head>
 <body>
     <!-- Navbar -->
@@ -51,10 +52,14 @@
       <div class="container">
 
         <section class="content" style="padding-top: 20px;">
-          <span class="display-6" id="data_title" name="data_title" style="padding-right: 20px;">title</span>
-          <span class="badge bg-info" id='timestamp' name='timestamp'></span>
-          <div id="content-data" name="content-data" class="float-none">data</div>
-          <div id="content-auth" name="content-auth" class="float-none"></div>
+          <div id="content-data" name="content-data">
+            <span class="display-6" id="data_title" name="data_title" style="padding-right: 20px;">title</span>
+            <span class="badge bg-info" id='timestamp' name='timestamp'></span>
+            <div id="data-display" name="data-display" class="float-none">data</div>
+          </div>
+          <div id="content-auth" name="content-auth" class="float-none">
+            sign-in-area
+          </div>
         </section>
   
       </div>
