@@ -1,16 +1,16 @@
 
 $( document ).ready(function() {
     let host_endpoint = 'http://127.0.0.1:5000/'
-    var app_name = document.location.hostname;
+    var app_url = document.location.href;
     let data_object = 'mushrooms';
-    
+
 
     $('#signin').click(signin);
     $('#signout').click(signout);
 
     set_ui_display();
 
-    // $('#app_title').html (app_name);
+    // $('#app_title').html (app_url);
 
     $.ajaxSetup({
         headers: { 'Authorization': 'Bearer ' + token.userIdToken }
@@ -79,7 +79,11 @@ var token = {
     },
     set userIdToken(value){
         sessionStorage.setItem("token", value);
-        console.log('userIdToken has chanaged value to ' + this.value);
+        if (value.length > 1) {
+            console.log('userIdToken has chanaged value to ' + value);
+        } else {
+            console.log('userIdToken is cleared.');
+        }
     }
 }
 
