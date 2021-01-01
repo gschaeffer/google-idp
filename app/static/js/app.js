@@ -3,6 +3,10 @@ $( document ).ready(function() {
     let host_endpoint = 'http://127.0.0.1:5000/'
     var app_name = document.location.hostname;
     let data_object = 'mushrooms';
+    
+
+    $('#signin').click(signin);
+    $('#signout').click(signout);
 
     set_ui_display();
 
@@ -40,6 +44,57 @@ $( document ).ready(function() {
     load_content();
 });
 
+function set_ui_display(){
+    // If user signed in (authenticated) then display username, sign-out button, and data content.
+    // else, display sign-in button & hide the rest.
+    if (token.userIdToken.length > 0) {
+        // signed-in
+        document.getElementById('content-data').style.visibility = 'block';
+        document.getElementById('content-auth').style.display = 'none';
+        document.getElementById('username').style.visibility = 'visible';
+        document.getElementById('username').innerHTML = 'test@domain.com';
+        document.getElementById('signin').style.display = 'none';
+        document.getElementById('signout').style.visibility = 'visible';
+    } else {
+        // signed-out
+        document.getElementById('content-data').style.display = 'none';
+        document.getElementById('content-auth').style.visibility = 'block';
+        document.getElementById('username').style.visibility = 'hidden';
+        document.getElementById('username').innerHTML = '';
+        document.getElementById('signin').style.visibility = 'visible';
+        document.getElementById('signout').style.visibility = 'hidden';
+    }
+}
+
+
+// *****************************************************************************************
+// * Auth functions & placeholders below.
+// *****************************************************************************************
+
+// This is passed into the backend to authenticate the user.
+var token = {
+    value: '',
+    get userIdToken(){
+        return sessionStorage.getItem("token");
+    },
+    set userIdToken(value){
+        sessionStorage.setItem("token", value);
+        console.log('userIdToken has chanaged value to ' + this.value);
+    }
+}
+
+function signin(){
+    token.userIdToken = "no-auth";
+}
+
+function signout(){
+    token.userIdToken = "";
+}
+
+
+// *****************************************************************************************
+// * Helper functions below.
+// *****************************************************************************************
 
 function sentenceCase (str) {
     if ((str===null) || (str===''))
@@ -58,39 +113,4 @@ function calcTime(offset) {
     nd = new Date(utc + (3600000*offset));
     // return time as a string
     return nd.toLocaleString();
-}
-
-function set_ui_display(){
-    // If user signed in (authenticated) then display username, sign-out button, and data content.
-    // else, display sign-in button & hide the rest.
-    if (token.userIdToken.length > 0) {
-        // signed-in
-        document.getElementById('content-data').style.visibility = 'block';
-        document.getElementById('content-auth').style.display = 'none';
-        document.getElementById('username').style.visibility = 'visible';
-        document.getElementById('username').innerHTML = 'marco@mail.com';
-        document.getElementById('signin').style.visibility = 'hidden';
-        document.getElementById('signout').style.visibility = 'visible';
-    } else {
-        // signed-out
-        document.getElementById('content-data').style.display = 'none';
-        document.getElementById('content-auth').style.visibility = 'block';
-        document.getElementById('username').style.visibility = 'hidden';
-        document.getElementById('username').innerHTML = '';
-        document.getElementById('signin').style.visibility = 'visible';
-        document.getElementById('signout').style.visibility = 'hidden';
-    }
-}
-
-
-// This is passed into the backend to authenticate the user.
-var token = {
-    value: '',
-    get userIdToken(){
-        return this.value;
-    },
-    set userIdToken(value){
-        this.value = value;
-        console.log('userIdToken has chanaged value to ' + this.value);
-    }
 }
