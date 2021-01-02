@@ -42,3 +42,7 @@ Then execute the `run.sh` helper file.
   - https://cloud.google.com/appengine/docs/python/authenticating-users-firebase-appengine
   - https://github.com/GoogleCloudPlatform/python-docs-samples/tree/master/appengine/standard/firebase/firenotes
 
+- https://google-auth.readthedocs.io/en/latest/reference/google.oauth2.id_token.html
+- https://realpython.com/flask-google-login/
+- https://developers.google.com/identity/protocols/oauth2/web-server#python
+

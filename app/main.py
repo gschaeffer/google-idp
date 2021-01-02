@@ -11,6 +11,7 @@ from sqlalchemy.orm.attributes import QueryableAttribute
 # AUTH CHANGES
 # - 1. add module imports
 # - 2. ensure firebase user.token is transfered from client in header; validate token.
+# - 3. move token capture & validation to decorator.
 
 # Add Google Auth
 from google.oauth2 import id_token
@@ -24,6 +25,19 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['GCP_PROJECT'] = "capable-shard-298720"
 db = SQLAlchemy(app)
+
+
+# 3. decorator
+def auth_required(func):
+    def _decorator():
+        id_token = request.headers['Authorization'].split(' ').pop()
+        app.logger.info(f"token is '{id_token[0:4]}...{id_token[-4:]}'")
+        claims = google.oauth2.id_token.verify_firebase_token(id_token, requests.Request(), audience=app.config['GCP_PROJECT'])
+        if not claims:
+            app.logger.info('Unauthorized')
+            return 'Unauthorized', 401
+        return func()
+    return _decorator
 
 
 ########## Endpoints 
@@ -42,16 +56,15 @@ def llamas():
 
 
 @app.route('/mushrooms', methods=['GET'])
+@auth_required
 def mushrooms():
-    id_token = request.headers['Authorization'].split(' ').pop()
-    claims = google.oauth2.id_token.verify_firebase_token(id_token, requests.Request(), audience=app.config['GCP_PROJECT'])
-    if not claims:
-        print('Unauthorized')
-        return 'Unauthorized', 401
-    # https://google-auth.readthedocs.io/en/latest/reference/google.oauth2.id_token.html
-    # https://realpython.com/flask-google-login/
-    # https://developers.google.com/identity/protocols/oauth2/web-server#python
-
+    # id_token = request.headers['Authorization'].split(' ').pop()
+    # # print(id_token)
+    # claims = google.oauth2.id_token.verify_firebase_token(id_token, requests.Request(), audience=app.config['GCP_PROJECT'])
+    # if not claims:
+    #     print('Unauthorized')
+    #     return 'Unauthorized', 401
+    
     mushrooms = Mushroom.query.all()
     all = []
     [all.append( {"id": str(m.id), "name": m.name} ) for m in mushrooms]

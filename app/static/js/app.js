@@ -13,7 +13,8 @@ $( document ).ready(function() {
     // $('#app_title').html (app_url);
 
     $.ajaxSetup({
-        headers: { 'Authorization': 'Bearer ' + token.userIdToken }
+        // Auto-includes the header key/values are always included in all calls.
+        headers: { 'Authorization': 'Bearer ' + token.userIdToken}
     });
 
     function load_content() {
@@ -80,9 +81,9 @@ var token = {
     set userIdToken(value){
         sessionStorage.setItem("token", value);
         if (value.length > 1) {
-            console.log('userIdToken has chanaged value to ' + value);
+            console.info('userIdToken has chanaged value to ' + value);
         } else {
-            console.log('userIdToken is cleared.');
+            console.info('userIdToken is cleared.');
         }
     }
 }
