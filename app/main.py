@@ -1,22 +1,35 @@
 import json
+import logging
 
 from flask import Flask, jsonify, request
+# import requests
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm.attributes import QueryableAttribute
+
+
+# AUTH CHANGES
+# - 1. add module imports
+# - 2. ensure firebase user.token is transfered from client in header; validate token.
+
+# Add Google Auth
+from google.oauth2 import id_token
+from google.auth.transport import requests
+import google.oauth2.credentials
 
 app = Flask(__name__)
 CORS(app)
 # app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/test.db'
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///test.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['GCP_PROJECT'] = "capable-shard-298720"
 db = SQLAlchemy(app)
 
 
 ########## Endpoints 
 @app.route('/', methods=['GET'])
 def index():
-    return 'You are at index :)'
+    return 'api :)'
 
 
 @app.route('/llamas', methods=['GET'])
@@ -30,6 +43,15 @@ def llamas():
 
 @app.route('/mushrooms', methods=['GET'])
 def mushrooms():
+    id_token = request.headers['Authorization'].split(' ').pop()
+    claims = google.oauth2.id_token.verify_firebase_token(id_token, requests.Request(), audience=app.config['GCP_PROJECT'])
+    if not claims:
+        print('Unauthorized')
+        return 'Unauthorized', 401
+    # https://google-auth.readthedocs.io/en/latest/reference/google.oauth2.id_token.html
+    # https://realpython.com/flask-google-login/
+    # https://developers.google.com/identity/protocols/oauth2/web-server#python
+
     mushrooms = Mushroom.query.all()
     all = []
     [all.append( {"id": str(m.id), "name": m.name} ) for m in mushrooms]
