@@ -6,10 +6,11 @@
 #    https://localhost:4443
 
 
+import os
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import ssl
 
-web_dir = os.path.join(os.path.dirname(__file__), 'web')
+web_dir = os.path.join(os.path.dirname(__file__), 'app')
 os.chdir(web_dir)
 
 httpd = HTTPServer(('localhost', 8000), SimpleHTTPRequestHandler)
