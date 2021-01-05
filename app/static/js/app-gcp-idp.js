@@ -10,6 +10,7 @@ $( document ).ready(function() {
     let host_endpoint = 'http://127.0.0.1:5000/'
     var app_url = document.location.href;
     let data_object = 'mushrooms';
+    console.info("TOKEN: [" + token.userIdToken + "] (" + typeof(token.userIdToken) + ")" );
 
     // 1. JS object w/google key/values.
     var config = {
@@ -65,7 +66,7 @@ $( document ).ready(function() {
         if ( $('#content-auth').length ) {
             ui.start('#content-auth', uiConfig);
         }
-        // console.log("STARTED");
+        // console.info("STARTED");
     }
 
 
@@ -74,7 +75,7 @@ $( document ).ready(function() {
     document.getElementById('signin').style.display = "none";
 
     $('#signout').click(signout);
-    
+
     set_ui_display();
 
     // $('#app_title').html (app_name);
@@ -100,7 +101,7 @@ $( document ).ready(function() {
             $('#data-display').html (display_data);
             $('#timestamp').html(calcTime(6));
         }).fail(function(data, status){
-            console.log('Uh oh, ' + status);
+            console.warn('Uh oh, ' + status);
             $('#data-display').html ('Uh oh, ' + status);
             $('#timestamp').html("Error");
         }).always(function(){
@@ -149,7 +150,7 @@ var token = {
     value: '',
     get userIdToken(){
         value = typeof(sessionStorage.getItem("token")) !== 'undefined' ? sessionStorage.getItem("token") : '';
-        // console.log('token is: ' + value);
+        // console.info('token is: ' + value);
         return value;
         // return sessionStorage.getItem("token");
     },
@@ -172,7 +173,7 @@ function signout(){
     firebase.auth().signOut().then(function() {
         token.userIdToken = "";
       }, function(error) {
-        console.log(error);
+        console.warn(error);
       });
 }
 
