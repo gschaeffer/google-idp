@@ -11,7 +11,6 @@ $( document ).ready(function() {
     var app_url = document.location.href;
     let data_object = 'mushrooms';
 
-
     // 1. JS object w/google key/values.
     var config = {
         apiKey: "AIzaSyCObdWu3i9LkMHype7ks7ckcrFWI26LRGk",
@@ -75,7 +74,7 @@ $( document ).ready(function() {
     document.getElementById('signin').style.display = "none";
 
     $('#signout').click(signout);
-
+    
     set_ui_display();
 
     // $('#app_title').html (app_name);
@@ -119,7 +118,7 @@ $( document ).ready(function() {
 function set_ui_display(){
     // If user signed in (authenticated) then display username, sign-out button, and data content.
     // else, display sign-in button & hide the rest.
-    if (token.userIdToken.length > 0) {
+    if ( token.userIdToken.length > 0 ) {
         // signed-in
         document.getElementById('content-data').style.visibility = 'block';
         document.getElementById('content-auth').style.display = 'none';
@@ -149,7 +148,10 @@ function set_ui_display(){
 var token = {
     value: '',
     get userIdToken(){
-        return sessionStorage.getItem("token");
+        value = typeof(sessionStorage.getItem("token")) !== 'undefined' ? sessionStorage.getItem("token") : '';
+        // console.log('token is: ' + value);
+        return value;
+        // return sessionStorage.getItem("token");
     },
     set userIdToken(value){
         sessionStorage.setItem("token", value);
