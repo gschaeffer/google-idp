@@ -11,7 +11,7 @@ from sqlalchemy.orm.attributes import QueryableAttribute
 # AUTH CHANGES
 # - 1. add module imports
 # - 2. ensure firebase user.token is transfered from client in header; validate token.
-# - 3. move token capture & validation to decorator.
+# - 3. optionally, move token capture & validation to decorator.
 
 # Add Google Auth
 from google.oauth2 import id_token
@@ -30,13 +30,17 @@ db = SQLAlchemy(app)
 # 3. decorator
 def auth_required(func):
     def _decorator():
-        id_token = request.headers['Authorization'].split(' ').pop()
-        app.logger.info(f"token is '{id_token[0:4]}...{id_token[-4:]}'")
-        claims = google.oauth2.id_token.verify_firebase_token(id_token, requests.Request(), audience=app.config['GCP_PROJECT'])
-        if not claims:
-            app.logger.info('Unauthorized')
+        try:
+            id_token = request.headers['Authorization'].split(' ').pop()
+            app.logger.info(f"token is '{id_token[0:4]}...{id_token[-4:]}'")
+            claims = google.oauth2.id_token.verify_firebase_token(id_token, requests.Request(), audience=app.config['GCP_PROJECT'])
+            # if not claims:
+            #     app.logger.info('Unauthorized')
+            #     return 'Unauthorized', 401
+            return func()
+        except Exception as err:
+            app.logger.info(f"ERROR: {err}")
             return 'Unauthorized', 401
-        return func()
     return _decorator
 
 
@@ -64,7 +68,6 @@ def mushrooms():
     # if not claims:
     #     print('Unauthorized')
     #     return 'Unauthorized', 401
-    
     mushrooms = Mushroom.query.all()
     all = []
     [all.append( {"id": str(m.id), "name": m.name} ) for m in mushrooms]

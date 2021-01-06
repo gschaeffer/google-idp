@@ -2,14 +2,8 @@ Flask==1.1.2
 Flask-SQLAlchemy
 flask-cors==3.0.9
 
-# jwt
-# pyjwt==1.7.1
-
 google-api-python-client
 google-auth==1.23.0
 google-auth-oauthlib 
 google-auth-httplib2
 requests==2.25.0
-
-# python-dotenv
-# requests-toolbelt==0.9.1

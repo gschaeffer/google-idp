@@ -10,7 +10,6 @@ $( document ).ready(function() {
     let host_endpoint = 'http://127.0.0.1:5000/'
     var app_url = document.location.href;
     let data_object = 'mushrooms';
-    console.info("TOKEN: [" + token.userIdToken + "] (" + typeof(token.userIdToken) + ")" );
 
     // 1. JS object w/google key/values.
     var config = {
@@ -28,10 +27,8 @@ $( document ).ready(function() {
         firebase.initializeApp(config);
         firebase.auth().onAuthStateChanged(function(user) {
           if (user) {
-            // $('#logged-out').hide();
             var name = user.displayName;
     
-            // If the provider gives a display name, use it. Otherwise, use the user's email.
             var welcomeName = name ? name : user.email;
             sessionStorage.setItem('welcomeName', welcomeName);
     
@@ -119,25 +116,31 @@ $( document ).ready(function() {
 function set_ui_display(){
     // If user signed in (authenticated) then display username, sign-out button, and data content.
     // else, display sign-in button & hide the rest.
-    if ( token.userIdToken.length > 0 ) {
-        // signed-in
-        document.getElementById('content-data').style.visibility = 'block';
-        document.getElementById('content-auth').style.display = 'none';
-        document.getElementById('username').style.visibility = 'visible';
-        // document.getElementById('username').innerHTML = 'test@domain.com';
-        // 6. Update username display.
-        document.getElementById('username').innerHTML = sessionStorage.getItem('welcomeName');
-        document.getElementById('signin').style.display = 'none';
-        document.getElementById('signout').style.visibility = 'visible';
-    } else {
-        // signed-out
-        document.getElementById('content-data').style.display = 'none';
-        document.getElementById('content-auth').style.visibility = 'block';
-        document.getElementById('username').style.visibility = 'hidden';
-        document.getElementById('username').innerHTML = '';
-        document.getElementById('signin').style.visibility = 'visible';
-        document.getElementById('signout').style.visibility = 'hidden';
+    try {
+        if ( !!token.userIdToken ) {
+            // signed-in
+            document.getElementById('content-data').style.visibility = 'block';
+            document.getElementById('content-auth').style.display = 'none';
+            document.getElementById('username').style.visibility = 'visible';
+            // document.getElementById('username').innerHTML = 'test@domain.com';
+            // 6. Update username display.
+            document.getElementById('username').innerHTML = sessionStorage.getItem('welcomeName');
+            document.getElementById('signin').style.display = 'none';
+            document.getElementById('signout').style.visibility = 'visible';
+        } else {
+            // signed-out
+            document.getElementById('content-data').style.display = 'none';
+            document.getElementById('content-auth').style.visibility = 'block';
+            document.getElementById('username').style.visibility = 'hidden';
+            document.getElementById('username').innerHTML = '';
+            document.getElementById('signin').style.visibility = 'visible';
+            document.getElementById('signout').style.visibility = 'hidden';
+        }
     }
+    catch (err) {
+        console.warn("Error detail: " + err.message);
+    }
+    
 }
 
 
@@ -149,10 +152,8 @@ function set_ui_display(){
 var token = {
     value: '',
     get userIdToken(){
-        value = typeof(sessionStorage.getItem("token")) !== 'undefined' ? sessionStorage.getItem("token") : '';
-        // console.info('token is: ' + value);
+        value = typeof(sessionStorage.getItem("token")) !== null ? sessionStorage.getItem("token") : '';
         return value;
-        // return sessionStorage.getItem("token");
     },
     set userIdToken(value){
         sessionStorage.setItem("token", value);
