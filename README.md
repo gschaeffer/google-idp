@@ -7,7 +7,7 @@ Subsequent branches show changes to the basic app (`main`). Changes are listed b
 
 Load it usaing Google Cloud Run:
 
-![Run on Google Cloud](https://deploy.cloud.run/button.svg)(https://deploy.cloud.run)
+[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run)
 
 ### Branches
 
