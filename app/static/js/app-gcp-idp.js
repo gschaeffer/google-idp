@@ -12,11 +12,12 @@ $( document ).ready(function() {
     let data_object = 'mushrooms';
 
     // 1. JS object w/google key/values.
-    // Copy your config from Firebase to here
+    // Copy your config from Identity Platform to here
     // var config = {
     //     apiKey: "",
     //     authDomain: "",
     // };
+    
 
     // 2.  add function
     function configureFirebaseLogin() {
@@ -44,8 +45,10 @@ $( document ).ready(function() {
             signInOptions: [
                 firebase.auth.GoogleAuthProvider.PROVIDER_ID,
                 firebase.auth.GithubAuthProvider.PROVIDER_ID,
+                firebase.auth.FacebookAuthProvider.PROVIDER_ID,
+                firebase.auth.TwitterAuthProvider.PROVIDER_ID,
                 firebase.auth.EmailAuthProvider.PROVIDER_ID,
-                // firebase.auth.PhoneAuthProvider.PROVIDER_ID,
+                firebase.auth.PhoneAuthProvider.PROVIDER_ID,
             ],
             // Terms of service url/callback.
             tosUrl: '<your-tos-url>',
