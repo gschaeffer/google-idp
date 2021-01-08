@@ -12,13 +12,10 @@ $( document ).ready(function() {
     let data_object = 'mushrooms';
 
     // 1. JS object w/google key/values.
+    // Copy your config from Firebase to here
     var config = {
-        apiKey: "AIzaSyCObdWu3i9LkMHype7ks7ckcrFWI26LRGk",
-        authDomain: "capable-shard-298720.firebaseapp.com",
-        projectId: "capable-shard-298720",
-        storageBucket: "capable-shard-298720.appspot.com",
-        messagingSenderId: "331973061162",
-        appId: "1:331973061162:web:617bce0956e263402b7153"
+        apiKey: "API_KEY_VALUE",
+        authDomain: "0123456789-ABC.firebaseapp.com",
     };
 
     // 2.  add function
