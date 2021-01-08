@@ -13,10 +13,10 @@ $( document ).ready(function() {
 
     // 1. JS object w/google key/values.
     // Copy your config from Firebase to here
-    var config = {
-        apiKey: "API_KEY_VALUE",
-        authDomain: "0123456789-ABC.firebaseapp.com",
-    };
+    // var config = {
+    //     apiKey: "",
+    //     authDomain: "",
+    // };
 
     // 2.  add function
     function configureFirebaseLogin() {
