@@ -25,6 +25,9 @@ Subsequent branches show changes to the basic app (`main`). Changes are listed b
   - REST calls for data retrieval include the user token in the header.
   - The Flask endpoint uses authentication to validate the user token.
 - Google Identity Platform is configured to use the username & password, Google, and Github authentication providers. This will need to also be configured within your GCP Identity Platform environment.
+- ![HLA](app/static/img/idp_firebaseui.png)
+
+
 
 ### Usage
 
