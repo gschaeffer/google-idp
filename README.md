@@ -1,6 +1,8 @@
 # google_idp
 Project contains example(s) for Google Identity Platform (IdP) usage.
 
+![Identity Platform Example App](app/static/img/app_image.png)
+
 The example uses a Flask app API accessing data managed in a database (sqlite). This is under the `main`' branch.
 
 Subsequent branches show changes to the basic app (`main`). Changes are listed below along with the branch that they may be found in. 
