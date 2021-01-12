@@ -7,10 +7,6 @@ The example uses a Flask app API accessing data managed in a database (sqlite). 
 
 Subsequent branches show changes to the basic app (`main`). Changes are listed below along with the branch that they may be found in. 
 
-<!-- Load it usaing Google Cloud Run:
-
-[![Run on Google Cloud](https://deploy.cloud.run/button.svg)](https://deploy.cloud.run) -->
-
 ### Branches
 
 #### main
@@ -27,7 +23,7 @@ Subsequent branches show changes to the basic app (`main`). Changes are listed b
 - Google Identity Platform is configured to use the username & password, Google, and Github authentication providers. This will need to also be configured within your GCP Identity Platform environment.
 - ![HLA](app/static/img/idp_firebaseui.png)
 
-
+[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fgschaeffer%2Fgoogle_idp&cloudshell_git_branch=gcp-idp-auth)
 
 ### Usage
 
