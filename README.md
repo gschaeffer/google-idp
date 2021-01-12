@@ -14,7 +14,7 @@ Subsequent branches show changes to the basic app (`main`). Changes are listed b
 - Python Fask app with SQLite access, un-authenticated. The Flask API may be accessed using code, curl, Postman, or other means.
 
 #### gcp-idp-auth
-[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fgschaeffer%2Fgoogle_idp&cloudshell_git_branch=gcp-idp-auth)
+​		[![Open in Cloud Shell](https://gstatic.com/cloudssh/images/open-btn.svg)](https://ssh.cloud.google.com/cloudshell/editor?cloudshell_git_repo=https%3A%2F%2Fgithub.com%2Fgschaeffer%2Fgoogle_idp&cloudshell_git_branch=gcp-idp-auth)
 - Google Identity Platform example. FirebaseUI (html) is used to demonstrate user sign-in. Authentication is added to the Flask app. IdP uses the email & password provider. Using the additional providers is possible by adding them in the GCP Identity Platform.
 - Changes from main branch.
   - If the user is not signed-in (token is not present), the webpage displays to Firebase UI. On login (token value set) the webpage displays the data content instead of the Firebase UI.
